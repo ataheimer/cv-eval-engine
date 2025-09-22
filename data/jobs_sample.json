@@ -1,0 +1,99 @@
+{
+  "founding_full_stack_software_engineer": {
+    "title": "Founding Full-Stack Software Engineer",
+    "mandatory": [
+      "python",
+      "sql",
+      "postgresql",
+      "docker",
+      "llm"
+    ],
+    "preferred": [
+      "next.js",
+      "supabase",
+      "airflow"
+    ],
+    "min_years": 2,
+    "edu_min": "BSc"
+  },
+  "iot_technician": {
+    "title": "IoT Technician",
+    "mandatory": [],
+    "preferred": [],
+    "min_years": 2,
+    "edu_min": "BSc"
+  },
+  "python_developer_api_frontend_development": {
+    "title": "python developer (api & frontend development)",
+    "mandatory": [
+      "python",
+      "flask",
+      "fastapi",
+      "django",
+      "react",
+      "postgresql",
+      "mysql",
+      "git"
+    ],
+    "preferred": [
+      "mysql",
+      "git"
+    ],
+    "min_years": 2,
+    "edu_min": "BSc"
+  },
+  "python_developer_mathematical_optimisation": {
+    "title": "python developer (mathematical optimisation)",
+    "mandatory": [
+      "python"
+    ],
+    "preferred": [],
+    "min_years": 3,
+    "edu_min": "BSc"
+  },
+  "python_developer_predictive_modelling_gradient_boosting": {
+    "title": "python developer (predictive modelling & gradient boosting)",
+    "mandatory": [
+      "python",
+      "lightgbm",
+      "xgboost",
+      "catboost",
+      "pandas",
+      "scikit-learn",
+      "numpy"
+    ],
+    "preferred": [
+      "scikit-learn"
+    ],
+    "min_years": 0,
+    "edu_min": "BSc"
+  },
+  "senior_machine_learning_engineer": {
+    "title": "senior machine learning engineer",
+    "mandatory": [
+      "python",
+      "postgresql",
+      "docker",
+      "kubernetes",
+      "openshift",
+      "azure",
+      "gcp",
+      "tensorflow",
+      "pytorch",
+      "langchain"
+    ],
+    "preferred": [
+      "airflow",
+      "mlflow",
+      "spark",
+      "kafka",
+      "elasticsearch",
+      "rag",
+      "langchain",
+      "docker",
+      "gcp"
+    ],
+    "min_years": 5,
+    "edu_min": "BSc"
+  }
+}

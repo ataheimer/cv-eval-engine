@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: cv-eval-web
+    ports:
+      - "8000:8000"
+    environment:
+      # LLM enrichment KAPALI çalıştırmak için bu satırı silebilirsin.
+      # Yerel Ollama (Windows/Mac Docker Desktop):
+      OLLAMA_URL: "http://host.docker.internal:11434"
+      # Linux'ta host.docker.internal yoksa:
+      # OLLAMA_URL: "http://ollama:11434"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./models:/app/models
+      - ./data:/app/data
+    depends_on:
+      - ollama
+    # Eğer kendi makinedeki Ollama'yı kullanacaksan depends_on’ı kaldır.
+
+  # Ollama'yı docker içinde çalıştırmak istersen:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+
+volumes:
+  ollama_models:

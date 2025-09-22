@@ -1,0 +1,15 @@
+{
+  "best_model": "catboost",
+  "cv_auc": {
+    "xgboost": 0.9797794117647058,
+    "lightgbm": 0.7830882352941176,
+    "catboost": 1.0
+  },
+  "features": [
+    "skill_overlap_count",
+    "mandatory_coverage_ratio",
+    "preferred_overlap_count",
+    "years_of_experience",
+    "edu_level_ord"
+  ]
+}

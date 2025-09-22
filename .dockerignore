@@ -1,0 +1,22 @@
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+
+# os/editor
+.DS_Store
+.idea/
+.vscode/
+
+# runtime
+uploads/
+models/
+data/*.csv
+
+# git
+.git/
+.gitignore

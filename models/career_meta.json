@@ -1,0 +1,42 @@
+{
+  "best_reg": "xgboost_reg",
+  "rmse_cv": {
+    "xgboost_reg": 1.9405371057706646,
+    "lightgbm_reg": 6.612265208034691,
+    "catboost_reg": 3.154374204970134
+  },
+  "features": [
+    "skill_overlap_count",
+    "mandatory_coverage_ratio",
+    "preferred_overlap_count",
+    "years_of_experience",
+    "edu_level_ord"
+  ],
+  "stage_bins": [
+    [
+      "intern",
+      0,
+      20
+    ],
+    [
+      "junior",
+      20,
+      40
+    ],
+    [
+      "mid",
+      40,
+      60
+    ],
+    [
+      "senior",
+      60,
+      80
+    ],
+    [
+      "expert",
+      80,
+      101
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h2>Upload and Evaluate CV</h2>
+  <form action="{{ url_for('evaluate') }}" method="post" enctype="multipart/form-data" class="form">
+    <label for="cv_file">CV (PDF or TXT)</label>
+    <input type="file" id="cv_file" name="cv_file" accept=".pdf,.txt" required>
+
+    <label for="job_id">Job Posting (optional, recommended)</label>
+    <select id="job_id" name="job_id">
+      <option value="">None (only basic score)</option>
+      {% for jid, job in jobs.items() %}
+        <option value="{{ jid }}">{{ job.title }}</option>
+      {% endfor %}
+    </select>
+
+    <label class="checkbox" style="margin-top:10px; color:#94a3b8;">
+      <input type="checkbox" name="use_llm"> Enrich with LLM (Ollama/local)
+    </label>
+
+    <label class="checkbox" style="margin-top:6px; color:#94a3b8;">
+      <input type="checkbox" name="show_shap"> Show SHAP explanations
+    </label>
+
+    <button type="submit">Evaluate</button>
+  </form>
+</section>
+{% endblock %}

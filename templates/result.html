@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="grid">
+  <div class="card">
+    <h2>Basic Score</h2>
+    <p><strong>Total Score:</strong> {{ base_score }}/100</p>
+    <p><strong>Years of Experience:</strong> {{ cv.years_of_experience }}</p>
+    <p><strong>Education:</strong> {{ cv.education_level }}</p>
+    <p><strong>Skills Found (merged):</strong> {{ ", ".join(cv.skills_found) if cv.skills_found else "—" }}</p>
+  </div>
+
+  <div class="card">
+    <h2>CV Text (Excerpt)</h2>
+    <pre class="raw">{{ cv.raw_text[:2500] }}{% if cv.raw_text|length > 2500 %}...{% endif %}</pre>
+  </div>
+
+  <div class="card">
+    <h2>Job Fit (Gradient Boosting)</h2>
+    {% if job %}
+      <p><strong>Job:</strong> {{ job.title }}</p>
+      {% if fit_output %}
+        <p><strong>Model Probability:</strong> {{ (fit_output.probability*100)|round(1) }}%</p>
+        <p><strong>Mandatory Skills Coverage:</strong>
+           {{ (fit_output.features.mandatory_coverage_ratio*100)|round(1) }}%</p>
+        {% if hybrid_score is not none %}
+          <p><strong>Hybrid Fit (0.7·model + 0.3·coverage):</strong> {{ hybrid_score }}%</p>
+        {% endif %}
+
+        <details>
+          <summary>Feature Vector</summary>
+          <pre>{{ fit_output.features | tojson(indent=2) }}</pre>
+        </details>
+
+        {% if used_shap and shap_top %}
+          <details>
+            <summary>SHAP (top 3 impactful features)</summary>
+            <ul>
+              {% for name, val in shap_top %}
+                <li>{{ name }} — {{ '%.4f'|format(val) }}</li>
+              {% endfor %}
+            </ul>
+          </details>
+        {% elif used_shap %}
+          <p class="muted">SHAP not installed or explanation unavailable.</p>
+        {% endif %}
+
+        {% if missing_mandatory %}
+          <p class="warn"><strong>Missing mandatory skills:</strong> {{ ", ".join(missing_mandatory) }}</p>
+        {% endif %}
+      {% else %}
+        <p class="muted">No job selected, model probability not calculated.</p>
+      {% endif %}
+    {% else %}
+      <p class="muted">No job selected.</p>
+    {% endif %}
+  </div>
+
+  {% if used_llm %}
+  <div class="card">
+    <h2>LLM Enrichment</h2>
+    {% if llm %}
+      <p><strong>Inferred skills (normalized):</strong>
+        {{ ", ".join(llm.inferred_skills_norm or []) if llm.inferred_skills_norm else "—" }}</p>
+      <p><strong>LLM-inferred experience years:</strong> {{ llm.years_of_experience_inferred or "—" }}</p>
+      <p><strong>LLM education level:</strong> {{ llm.education_level or "—" }}</p>
+      {% if llm.links %}
+        <details>
+          <summary>Found links</summary>
+          <ul>
+            {% for link in llm.links %}
+              <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+            {% endfor %}
+          </ul>
+        </details>
+      {% endif %}
+    {% else %}
+      <p class="muted">No response from LLM.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+<div class="card">
+  <h2>Career Stage & Trajectory (Boosting)</h2>
+  {% if job %}
+    {% if career_now %}
+      <p><strong>Current level score:</strong> {{ career_now.score }} / 100</p>
+      <p><strong>Current stage:</strong> {{ career_now.stage }}</p>
+    {% else %}
+      <p class="muted">Current stage not available.</p>
+    {% endif %}
+
+    {% if career_future %}
+      <details>
+        <summary>Future projections</summary>
+        <ul>
+          {% for it in career_future %}
+            <li>+{{ it.years_ahead }} years → score: {{ it.score }} / 100, stage: {{ it.stage }}</li>
+          {% endfor %}
+        </ul>
+      </details>
+    {% endif %}
+  {% else %}
+    <p class="muted">No job selected, career stage not calculated.</p>
+  {% endif %}
+</div>
+
+<p><a href="{{ url_for('index') }}" class="button">New Evaluation</a></p>
+{% endblock %}
